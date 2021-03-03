@@ -1,13 +1,13 @@
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//           INSTITUTO POLITÉCNICO DO CÁVADO E DO AVE
+//           INSTITUTO POLITï¿½CNICO DO Cï¿½VADO E DO AVE
 //                          2011/2012
-//             ENGENHARIA DE SISTEMAS INFORMÁTICOS
-//                    VISÃO POR COMPUTADOR
+//             ENGENHARIA DE SISTEMAS INFORMï¿½TICOS
+//                    VISï¿½O POR COMPUTADOR
 //
 //             [  DUARTE DUQUE - dduque@ipca.pt  ]
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-// Desabilita (no MSVC++) warnings de funções não seguras (fopen, sscanf, etc...)
+// Desabilita (no MSVC++) warnings de funï¿½ï¿½es nï¿½o seguras (fopen, sscanf, etc...)
 #define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
@@ -18,11 +18,11 @@
 
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//            FUNÇÕES: ALOCAR E LIBERTAR UMA IMAGEM
+//            FUNï¿½ï¿½ES: ALOCAR E LIBERTAR UMA IMAGEM
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
-// Alocar memória para uma imagem
+// Alocar memï¿½ria para uma imagem
 IVC *vc_image_new(int width, int height, int channels, int levels)
 {
 	IVC *image = (IVC *) malloc(sizeof(IVC));
@@ -46,7 +46,7 @@ IVC *vc_image_new(int width, int height, int channels, int levels)
 }
 
 
-// Libertar memória de uma imagem
+// Libertar memï¿½ria de uma imagem
 IVC *vc_image_free(IVC *image)
 {
 	if(image != NULL)
@@ -66,7 +66,7 @@ IVC *vc_image_free(IVC *image)
 
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-//    FUNÇÕES: LEITURA E ESCRITA DE IMAGENS (PBM, PGM E PPM)
+//    FUNï¿½ï¿½ES: LEITURA E ESCRITA DE IMAGENS (PBM, PGM E PPM)
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 
@@ -230,7 +230,7 @@ IVC *vc_read_image(char *filename)
 				return NULL;
 			}
 
-			// Aloca memória para imagem
+			// Aloca memï¿½ria para imagem
 			image = vc_image_new(width, height, channels, levels);
 			if(image == NULL) return NULL;
 
@@ -272,7 +272,7 @@ IVC *vc_read_image(char *filename)
 				return NULL;
 			}
 
-			// Aloca memória para imagem
+			// Aloca memï¿½ria para imagem
 			image = vc_image_new(width, height, channels, levels);
 			if(image == NULL) return NULL;
 
@@ -361,4 +361,34 @@ int vc_write_image(char *filename, IVC *image)
 	}
 	
 	return 0;
+}
+
+int vc_gray_negative(IVC *srcdst)
+{
+	if(srcdst == NULL) return 0;
+
+	for (int i = 0; i < srcdst->bytesperline*srcdst->width; i++)
+	{
+		srcdst->data[i] = 255 - srcdst->data[i];
+	}
+	
+	vc_write_image("ex5.pbm", srcdst);
+
+	return 1;
+}
+
+int vc_rgb_negative(IVC *srcdst)
+{
+	if(srcdst == NULL) return 0;
+
+	for (int i = 0; i < srcdst->bytesperline*srcdst->width; i += srcdst->channels)
+	{
+		srcdst->data[i] = 255 - srcdst->data[i];
+		srcdst->data[i + 1] = 255 - srcdst->data[i + 1];
+		srcdst->data[i + 2] = 255 - srcdst->data[i + 2];
+	}
+
+	vc_write_image("ex6.pbm", srcdst);
+
+	return 1;
 }
