@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "vc.h"
+#include "../vc.h"
 
 int main(void)
 {

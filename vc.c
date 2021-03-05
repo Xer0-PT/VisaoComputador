@@ -363,6 +363,10 @@ int vc_write_image(char *filename, IVC *image)
 	return 0;
 }
 
+/*********************************
+*  Funções implementadas em aula *
+*********************************/
+
 int vc_gray_negative(IVC *srcdst)
 {
 	if(srcdst == NULL) return 0;
@@ -388,7 +392,121 @@ int vc_rgb_negative(IVC *srcdst)
 		srcdst->data[i + 2] = 255 - srcdst->data[i + 2];
 	}
 
-	vc_write_image("ex6.pbm", srcdst);
+	vc_write_image("ex5.1.pbm", srcdst);
+
+	return 1;
+}
+
+int vc_rgb_get_red_gray(IVC *srcdst)
+{
+	unsigned char* data = (unsigned char*)srcdst->data;
+	int widht = srcdst->width;
+	int heigh = srcdst->height;
+	int bytesperline = srcdst->bytesperline;
+	int channels = srcdst->channels;
+	int x, y, red;
+	long int pos;
+
+	if(srcdst == NULL) return 0;
+
+	if ((srcdst->width <= 0) || (srcdst->height <= 0) || (srcdst->data == NULL)) {
+
+		return 0;
+	}
+
+	if (channels != 3) {
+
+		return 0;
+	}
+
+	for (y = 0; y < heigh; y++) {
+		for (x = 0; x < widht; x++) {
+
+			pos = y * bytesperline + x * channels;
+
+			red = data[pos];
+			data[pos + 1] = red;
+			data[pos + 2] = red;
+		}
+	}
+
+	vc_write_image("red_gray.pbm", srcdst);
+
+	return 1;
+}
+
+int vc_rgb_get_green_gray(IVC *srcdst)
+{
+	unsigned char* data = (unsigned char*)srcdst->data;
+	int widht = srcdst->width;
+	int heigh = srcdst->height;
+	int bytesperline = srcdst->bytesperline;
+	int channels = srcdst->channels;
+	int x, y, green;
+	long int pos;
+
+	if(srcdst == NULL) return 0;
+
+	if ((srcdst->width <= 0) || (srcdst->height <= 0) || (srcdst->data == NULL)) {
+
+		return 0;
+	}
+
+	if (channels != 3) {
+
+		return 0;
+	}
+
+	for (y = 0; y < heigh; y++) {
+		for (x = 0; x < widht; x++) {
+
+			pos = y * bytesperline + x * channels;
+
+			green = data[pos + 1];
+			data[pos] = green;
+			data[pos + 2] = green;
+		}
+	}
+
+	vc_write_image("green_gray.pbm", srcdst);
+
+	return 1;
+}
+
+int vc_rgb_get_blue_gray(IVC *srcdst)
+{
+	unsigned char* data = (unsigned char*)srcdst->data;
+	int widht = srcdst->width;
+	int heigh = srcdst->height;
+	int bytesperline = srcdst->bytesperline;
+	int channels = srcdst->channels;
+	int x, y, blue;
+	long int pos;
+
+	if(srcdst == NULL) return 0;
+
+	if ((srcdst->width <= 0) || (srcdst->height <= 0) || (srcdst->data == NULL)) {
+
+		return 0;
+	}
+
+	if (channels != 3) {
+
+		return 0;
+	}
+
+	for (y = 0; y < heigh; y++) {
+		for (x = 0; x < widht; x++) {
+
+			pos = y * bytesperline + x * channels;
+
+			blue = data[pos + 2];
+			data[pos] = blue;
+			data[pos + 1] = blue;
+		}
+	}
+
+	vc_write_image("blue_gray.pbm", srcdst);
 
 	return 1;
 }

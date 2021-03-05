@@ -37,6 +37,16 @@ IVC *vc_image_free(IVC *image);
 IVC *vc_read_image(char *filename);
 int vc_write_image(char *filename, IVC *image);
 
+
+/*********************************
+*  Funções implementadas em aula *
+*********************************/
+
 // FUNÇÕES: CAlCULAR NEGATIVOS DE IMAGENS
 int vc_gray_negative(IVC *srcdst);
 int vc_rgb_negative(IVC *srcdst);
+
+// FUNÇÕES: EXTRAIR AS COMPONENTES RGB
+int vc_rgb_get_red_gray(IVC *srcdst);
+int vc_rgb_get_green_gray(IVC *srcdst);
+int vc_rgb_get_blue_gray(IVC *srcdst);
