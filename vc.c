@@ -430,7 +430,7 @@ int vc_rgb_get_red_gray(IVC *srcdst)
 		}
 	}
 
-	vc_write_image("red_gray.pbm", srcdst);
+	vc_write_image("red_gray.ppm", srcdst);
 
 	return 1;
 }
@@ -468,7 +468,7 @@ int vc_rgb_get_green_gray(IVC *srcdst)
 		}
 	}
 
-	vc_write_image("green_gray.pbm", srcdst);
+	vc_write_image("green_gray.ppm", srcdst);
 
 	return 1;
 }
@@ -506,7 +506,7 @@ int vc_rgb_get_blue_gray(IVC *srcdst)
 		}
 	}
 
-	vc_write_image("blue_gray.pbm", srcdst);
+	vc_write_image("blue_gray.ppm", srcdst);
 
 	return 1;
 }
