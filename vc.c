@@ -510,3 +510,42 @@ int vc_rgb_get_blue_gray(IVC *srcdst)
 
 	return 1;
 }
+
+// Converte uma imagem RGB numa imagem em tons de cinza
+int vc_rgb_to_gray(IVC *src, IVC *dst)
+{
+
+	unsigned char *datasrc = (unsigned char *)src->data;
+	int bytesperline_src = src->width * src->channels;
+	int channels_src = src->channels;
+	unsigned char *datadst = (unsigned char *)dst->data;
+	int bytesperline_dst = dst->width * dst->channels;
+	int channels_dst = dst->channels;
+	int width = src->width;
+	int height = src->height;
+	int x, y;
+	long int pos_src, pos_dst;
+	float rf, gf, bf;
+
+	// Verifica‹o de Erros
+	if ((src->width <= 0) || (src->height <= 0) || (src->data == NULL)) return 0;
+	if ((src->width != dst->width) || (src->height != dst->height)) return 0;
+	if ((src->channels != 3) || (dst->channels != 1)) return 0;
+	// if (channels != 3) return 0;
+
+	for (y = 0; y<height; y++)
+	{
+		for (x = 0; x<width; x++)
+		{
+			pos_src = y * bytesperline_src + x * channels_src;
+			pos_dst = y * bytesperline_dst + x * channels_dst;
+
+			rf = (float)datasrc[pos_src];
+			gf = (float)datasrc[pos_src + 1];
+			bf = (float)datasrc[pos_src + 2];
+
+			datadst[pos_dst] = (unsigned char)((rf * 0.299) + (gf * 0.587) + (bf * 0.114));
+		}
+	}
+	return 1;
+}
