@@ -549,3 +549,70 @@ int vc_rgb_to_gray(IVC *src, IVC *dst)
 	}
 	return 1;
 }
+
+// Converter de RGB para HSV
+int vc_rgb_to_hsv(IVC *srcdst)
+{
+    unsigned char *data = (unsigned char *)srcdst->data;
+    int width = srcdst->width;
+    int height = srcdst->height;
+    int bytesperline = srcdst->width * srcdst->channels;
+    int channels = srcdst->channels;
+    int i, size;
+    float r, g, b, hue, saturation, val, maxrgb, minrgb;
+    
+    //VerificaÁ„o de erros
+    if ((width <= 0) || (height <= 0) || (data == NULL)) return 0;
+    if (channels != 3) return 0;
+    
+    size = width * height * channels;
+    
+    for (i = 0; i < size; i = i + channels)
+    {
+        r = (float)data[i];
+        g = (float)data[i + 1];
+        b = (float)data[i + 2];
+        
+        
+        maxrgb = (r > g ? (r > b ? r : b) : (g > b ? g : b)); // calcular maximo no rgb
+        minrgb = (r < g ? (r < b ? r : b) : (g < b ? g : b)); // calcular minimo no rgb
+        val = maxrgb;
+        
+        if (val == 0.0f)
+        {
+            saturation = 0.0f;
+            hue = 0.0f;
+        }
+        else
+        {
+            // Saturation toma valores entre [0, 255]
+            saturation = ((maxrgb - minrgb) / maxrgb) * 255.0f;
+            if (saturation == 0.0f)
+            {
+                hue = 0.0f;
+                val = 0.0f;
+            }
+            else if (maxrgb == r)
+            {
+                if (g >= b)
+                {
+                    hue = 60.0f * (g - b) / (maxrgb - minrgb);
+                }
+                else
+                {
+                    hue = 360.0f + 60.0f * (g - b) / (maxrgb - minrgb);
+                }
+            }
+            else if (maxrgb == g) {
+                hue = 120.0f + 60.0f * (b - r) / (maxrgb - minrgb);
+            }
+            else if (maxrgb == b) {
+                hue = 240.0f + 60.0f * (r - g) / (maxrgb - minrgb);
+            }
+        }
+        data[i] = (unsigned char)(hue / 360.0f * 255.0f);
+        data[i + 1] = (unsigned char)(saturation);
+        data[i + 2] = (unsigned char)(val);
+    }
+    return 1;
+}
