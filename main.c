@@ -18,6 +18,8 @@ int main(void)
 
 	vc_rgb_to_hsv(image);
 	//vc_hsv_segmentation(image, 30, 70, 50, 100, 60, 100); // Amarelo
+	//vc_hsv_segmentation(image, 150, 200, 30, 100, 30, 100); // Ciano
+	vc_hsv_segmentation(image, 0, 360, 0, 20, 80, 100); // Branco
 
 	vc_write_image("vc-hsv2rgb.ppm", image);
 
