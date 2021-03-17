@@ -20,7 +20,7 @@ int main(void)
 
 	vc_image_free(image);
 
-	system("cmd /c start FilterGear threshold.pgm");
+	system("cmd /c start FilterGear threshold.pgm"); 
 	system("FilterGear coins.pgm");
 
 	printf("Press any key to exit...\n");
