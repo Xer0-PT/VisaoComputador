@@ -55,3 +55,4 @@ int vc_rgb_to_gray(IVC *src, IVC *dst);
 
 int vc_rgb_to_hsv(IVC *srcdst);
 int vc_hsv_segmentation(IVC *srcdst, int hmin, int hmax, int smin, int smax, int vmin, int vmax);
+int vc_gray_to_binary(IVC *srcdst, int threshold);
