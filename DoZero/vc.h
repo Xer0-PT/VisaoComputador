@@ -36,3 +36,8 @@ IVC *vc_image_free(IVC *image);
 // FUN��ES: LEITURA E ESCRITA DE IMAGENS (PBM, PGM E PPM)
 IVC *vc_read_image(char *filename);
 int vc_write_image(char *filename, IVC *image);
+
+
+// Funções implementadas em aula
+int vc_gray_negative(IVC *srcdst);
+int vc_rgb_negative(IVC *srcdst);
