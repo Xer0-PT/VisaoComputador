@@ -666,3 +666,32 @@ int vc_hsv_segmentation(IVC *srcdst, int hmin, int hmax, int smin, int smax, int
 
 	return 1;
 }
+
+int vc_gray_to_binary(IVC *srcdst, int threshold)
+{
+	unsigned char *data = (unsigned char *)srcdst->data;
+	int bytesperline = srcdst->width*srcdst->channels;
+	int channels = srcdst->channels;
+	int x, y;
+	long int pos;
+
+	// Verificação de erros
+	if ((srcdst->width <= 0) || (srcdst->height <= 0) || (srcdst->data == NULL)) return 0;
+
+	for (y = 0; y < srcdst->height; y++)
+	{
+		for (x = 0; x < srcdst->width; x++)
+		{
+			pos = y * bytesperline + x * channels;
+
+			if(srcdst->data[pos] > threshold)
+				srcdst->data[pos] = 1;
+			else
+				srcdst->data[pos] = 0;
+		}
+	}
+	
+	vc_write_image("threshold.pgm", srcdst);
+
+	return 1;
+}
